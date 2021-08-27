@@ -6,6 +6,7 @@
     "kfold": true,
     "pseudo": true,
     "mixup": false,
+     "test":false,
 
     "arch": {
         "type": "resnet18",
