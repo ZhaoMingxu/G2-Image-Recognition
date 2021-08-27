@@ -1,0 +1,73 @@
+{
+    "name": "G2",
+    "five_fold": false,
+    "n_gpu": 1,
+    "n_classes": 5,    
+    "kfold": true,
+    "pseudo": true,
+    "mixup": false,
+
+    "arch": {
+        "type": "resnet18",
+        "args": {
+            "pretrained": true
+        }
+    },
+
+    "archtest": {
+        "type": "resnet18",
+        "args": {
+            "pretrained": false
+        }
+    },
+
+    "data_loader": {
+        "type": "no_use",
+        "args":{
+            "data_dir": "../",
+            "stage": "train",
+            "batch_size": 32,
+            "shuffle": true,
+            "validation_split": 0.2,
+            "num_workers": 4,
+            "fold": 5,
+            "tta": true,
+            "ntta": 5
+        }
+    },
+    "optimizer": {
+        "type": "SGD", 
+        "args":{
+            "lr": 0.001,
+            "weight_decay": 0.0,
+            "momentum": 0.9
+        }
+    },
+    "loss": "no_use",
+    "metrics": [
+        "accuracy","score"
+    ],
+    "lr_scheduler": {
+        "type": "CosineAnnealingWarmupRestarts",
+        "args": {
+            "first_cycle_steps": 100,
+            "cycle_mult": 1.0,
+            "max_lr": 0.01,
+            "min_lr": 0.001,
+            "warmup_steps": 10,
+            "gamma": 1.0
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+
+        "save_dir": "saved/",
+        "save_period": 101,
+        "verbosity": 2,
+        
+        "monitor": "min val_loss",
+        "early_stop": 20,
+
+        "tensorboard": true
+    }
+}
